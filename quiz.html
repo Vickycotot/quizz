@@ -1,0 +1,125 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/sdcard/a-program/html/bootstrap-5.0.2-examples/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="style.css" rel="stylesheet">
+        <style>
+          .option{
+            height: 2rem;
+            width: 2rem;
+          }
+        </style>
+    </head>
+    <body class="bg-dark">
+        <div class="">
+        <div class="ps-3 pt-3">
+             <h2 class="fw-bold text-primary">V<span class="text-white">Quiz</span></h2>
+        </div>
+<hr class="mx-3 bg-white">
+            <div class="m-3 py-3">
+                <h5 class="text-white" id="question">Trivia API question</h5>
+            </div>
+    <div class="row m-3 bg-primary border border-5 border-primary rounded-pill">
+      <div class="col-2 pt-2 bg-white text-center rounded-pill"><h4 class="fw-bold">A.</h4></div>
+      <div class="col-10 text-white pt-2 btn-outline-warning rounded-pill" ondblclick="userChoice('A')"><h4 id="option_a">Option A</h4></div>
+    </div>
+    <div class="row m-3 bg-primary border border-5 border-primary rounded-pill">
+      <div class="col-2 pt-2 bg-white text-center rounded-pill"><h4 class="fw-bold">B.</h4></div>
+      <div class="col-10 text-white pt-2 btn-outline-warning rounded-pill" ondblclick="userChoice('B')"><h4 id="option_b">Option B</h4></div>
+    </div>
+    <div class="row m-3 bg-primary border border-5 border-primary rounded-pill">
+      <div class="col-2 pt-2 bg-white text-center rounded-pill"><h4 class="fw-bold">C.</h4></div>
+      <div class="col-10 text-white pt-2 btn-outline-warning rounded-pill" ondblclick="userChoice('C')"><h4 id="option_c">Option C</h4></div>
+    </div>
+    <div class="row m-3 bg-primary border border-5 border-primary rounded-pill">
+      <div class="col-2 pt-2 bg-white text-center rounded-pill"><h4 class="fw-bold">D.</h4></div>
+      <div class="col-10 text-white pt-2 btn-outline-warning rounded-pill" ondblclick="userChoice('D')"><h4 id="option_d">Option D</h4></div>
+    </div>
+
+<hr class="mx-3 bg-white mt-5">
+
+  <footer class="px-3 text-muted text-end">
+    by Vicky_cotot &middot; &copy; 2021
+  </footer>
+
+        </div>
+    </body>
+    <script>
+   const text_correct = "you're correct";
+   const text_incorrect = "sorry you're incorrect";
+   let obj;
+   let res;
+   var countQuiz = 0;
+   let quiz;
+   let option1, option2, option3, uption4;
+
+   let choice = [];
+
+    fetch('https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple')			
+    .then((response) => response.json())			
+    .then((data) => {
+       obj = JSON.stringify(data);
+       res = JSON.parse(obj);
+       display();
+     })			
+     .catch((err) => console.log(err));
+
+    function userChoice(ans){
+    if(ans == "A"){
+        if(choice[0] == option4){
+            alert(text_correct);
+        }else{
+            alert(text_incorrect);
+        }
+    }else if(ans == "B"){
+        if(choice[1] == option4){
+            alert(text_correct);
+        }else{
+            alert(text_incorrect);
+        }
+    }else if(ans == "C"){
+        if(choice[2] == option4){
+            alert(text_correct);
+        }else{
+            alert(text_incorrect);
+        }
+    }else if(ans == "D"){
+        if(choice[3] == option4){
+            alert(text_correct);
+        }else{
+            alert(text_incorrect);
+        }
+    }
+    quizNum();
+    display();
+    }
+
+    function quizNum(){
+    countQuiz++;
+    while(countQuiz > 9){
+     countQuiz = 0;
+    }
+    }
+
+    function display(){
+       quiz = res.results[countQuiz].question;
+       option1 = res.results[countQuiz].incorrect_answers[0];
+       option2 = res.results[countQuiz].incorrect_answers[1];
+       option3 = res.results[countQuiz].incorrect_answers[2];
+       option4 = res.results[countQuiz].correct_answer;
+
+    choice = [];
+    choice.push(option1,option2,option3,option4);
+    choice.sort();
+    choice.sort();
+    choice.sort();
+
+     question.innerHTML = quiz;
+     option_a.innerHTML = choice[0];
+     option_b.innerHTML = choice[1];
+     option_c.innerHTML = choice[2];
+     option_d.innerHTML = choice[3];
+    }
+    </script>
+</html>
